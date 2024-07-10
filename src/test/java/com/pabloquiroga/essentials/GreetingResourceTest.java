@@ -9,6 +9,17 @@ import static org.hamcrest.CoreMatchers.is;
 @QuarkusTest
 class GreetingResourceTest {
 
+    /**
+     Patron =>
+
+     Given
+      - dado un escenario
+     When
+      - cuando ejecutes una accion dada
+     Then
+      - esperas un resultado
+     */
+
     @Test
     void testHelloEndpoint() {
         given()
@@ -36,6 +47,6 @@ class GreetingResourceTest {
                 .get("/greetings/pablo")
                 .then()
                 .statusCode(200)
-                .body(is("Hello pablo"));
+                .body(is("Hola pablo"));
     }
 }

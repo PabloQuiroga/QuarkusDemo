@@ -1,4 +1,4 @@
-package com.pabloquiroga.essentials.greetings.services;
+package com.pabloquiroga.essentials.greetings;
 
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -6,6 +6,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 public class GreetingService {
 
     public String greeting(String name){
-        return "Hello " + name;
+        return "Hola " + name;
     }
 }
