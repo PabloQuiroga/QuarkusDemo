@@ -1,5 +1,7 @@
 package com.pabloquiroga.essentials;
 
+import com.pabloquiroga.essentials.greetings.GreetingResource;
+import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
 
@@ -7,6 +9,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
+@TestHTTPEndpoint(GreetingResource.class)
 class GreetingResourceTest {
 
     /**
@@ -21,32 +24,34 @@ class GreetingResourceTest {
      */
 
     @Test
-    void testHelloEndpoint() {
+    void test_greetingsWithoutQuery() {
         given()
                 .when()
-                .get("/greetings")
+                .get()
                 .then()
                 .statusCode(200)
                 .body(is("Hello from Quarkus"));
     }
 
     @Test
-    void test_Resource_GreetingsWithoutName_returnGenericGreetings(){
+    void test_Resource_GreetingsWithoutName_returns_errorParam(){
         given()
+                .queryParam("name", "")
                 .when()
-                .get("/greetings/")
+                .get()
                 .then()
                 .statusCode(200)
-                .body(is("Hello from Quarkus"));
+                .body(is("No se ha compartido un parametro para nombre"));
     }
 
     @Test
     void test_Resource_GreetingsWithName_returnGreetings(){
         given()
+                .queryParam("name", "Pablo")
                 .when()
-                .get("/greetings/pablo")
+                .get()
                 .then()
                 .statusCode(200)
-                .body(is("Hola pablo"));
+                .body(is("Hola Pablo"));
     }
 }
