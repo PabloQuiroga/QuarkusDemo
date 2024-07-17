@@ -12,7 +12,6 @@ import static org.hamcrest.CoreMatchers.*;
 @TestHTTPEndpoint(UserResource.class)
 public class UserResourceTest {
     private final User u1 = new User("juan", "perez", "01/01/2000");
-    private final User u2 = new User("Pablo", "perez", "01/01/1996");
 
     @Test
     void test_GetUserDefault_returns_User(){
@@ -38,14 +37,14 @@ public class UserResourceTest {
     }
 
     @Test
-    void test_getUserById_returns_User(){
+    void test_getUserById_withParamNotValid_returns_NoContent(){
         given()
                 .queryParam("id", 1)
                 .when()
                     .get("/id")
                 .then()
-                    .statusCode(200)
-                    .body(containsStringIgnoringCase(u1.name));
+                    .statusCode(404)
+                    .body(containsString("No hay datos"));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.pabloquiroga.essentials;
 
+import com.pabloquiroga.essentials.greetings.GreetingResourceTest;
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
 @QuarkusIntegrationTest

@@ -1,6 +1,5 @@
-package com.pabloquiroga.essentials;
+package com.pabloquiroga.essentials.greetings;
 
-import com.pabloquiroga.essentials.greetings.GreetingResource;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;

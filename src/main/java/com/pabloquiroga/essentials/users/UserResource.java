@@ -35,7 +35,7 @@ public class UserResource {
         if(opt.isPresent()){
             return Response.ok(opt.get()).build();
         } else {
-            return Response.noContent().build();
+            return Response.status(404).entity("No hay datos que coincidan con lo solicitado").build();
         }
     }
 
