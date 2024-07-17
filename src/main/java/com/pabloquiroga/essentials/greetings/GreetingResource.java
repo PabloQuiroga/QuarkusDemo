@@ -14,28 +14,10 @@ public class GreetingResource {
         this.service = service;
     }
 
-    /*
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "Hello from Quarkus";
-    } */
-
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String greetings(@QueryParam("name") String name) {
         return service.greeting(name);
-    }
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/con-nombre")
-    public String greetingsWithName(@QueryParam("name") String name){
-        return Optional.ofNullable(name)
-                .map( n ->
-                        (n.isEmpty()) ? "Hello"  : "Hello "+ n
-                )
-                .orElse("No se ha compartido un parametro para nombre");
     }
 
 }
