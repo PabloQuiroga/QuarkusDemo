@@ -3,26 +3,21 @@ package com.pabloquiroga.essentials.users;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.*;
 
 @QuarkusTest
 @TestHTTPEndpoint(UserResource.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserResourceTest {
-    private final User u1 = new User("juan", "perez", "01/01/2000");
 
     @Test
-    void test_GetUserDefault_returns_User(){
-        given().when()
-                .get("/default")
-                .then()
-                .statusCode(200)
-                .body(containsStringIgnoringCase(u1.name));
-    }
-
-    @Test
+    @Order(2)
     void test_createUser_returns_BooleanOfSuccess() {
         given()
                 .body(
@@ -37,7 +32,29 @@ public class UserResourceTest {
     }
 
     @Test
-    void test_getUserById_withParamNotValid_returns_NoContent(){
+    @Order(3)
+    void test_GetUserDefault_returns_User(){
+        given()
+                .when()
+                    .get("/default")
+                .then()
+                    .statusCode(200)
+                    .body(containsStringIgnoringCase("pablo"));
+    }
+
+    @Test
+    @Order(1)
+    void test_getUserDefault_returns_NotFound(){
+        given()
+                .when()
+                    .get("/default")
+                .then()
+                    .statusCode(404)
+                    .body(containsString("No hay datos"));
+    }
+
+    @Test
+    void test_getUserById_withParamNotValid_returns_NotFound(){
         given()
                 .queryParam("id", 1)
                 .when()
@@ -49,9 +66,11 @@ public class UserResourceTest {
 
     @Test
     void test_getClassMessage_returns_String(){
-        given().when().get()
+        given()
+                .when()
+                    .get()
                 .then()
-                .statusCode(200)
-                .body(containsString("Hello"));
+                    .statusCode(200)
+                    .body(containsString("Hello"));
     }
 }

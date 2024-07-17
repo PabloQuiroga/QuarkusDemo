@@ -5,7 +5,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Path("/users")
 public class UserResource {
@@ -23,20 +23,22 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/default")
-    public User getUserDefault(){
-        return service.getDefaultUser();
+    public Response getUserDefault(){
+        var response = service.getDefaultUser()
+                .orElseThrow(() ->
+                        new NoSuchElementException("No hay datos que coincidan con lo solicitado"));
+        return Response.ok(response).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/id")
     public Response getUserById(@QueryParam("id") int id){
-        Optional<User> opt = service.getUserById(id);
-        if(opt.isPresent()){
-            return Response.ok(opt.get()).build();
-        } else {
-            return Response.status(404).entity("No hay datos que coincidan con lo solicitado").build();
-        }
+        var response = service.getUserById(id)
+                .orElseThrow(() ->
+                        new NoSuchElementException("No hay datos que coincidan con lo solicitado"));
+
+        return Response.ok(response).build();
     }
 
     @GET

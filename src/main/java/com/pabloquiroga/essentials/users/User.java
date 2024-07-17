@@ -28,6 +28,13 @@ public class User {
     }
 
     /**
+     * GETTERS
+     */
+    public int getID() {
+        return this.id;
+    }
+
+    /**
      * @param birthdate with format "15/08/1993"
      */
     public int setAgeFromBirthdate(String birthdate){

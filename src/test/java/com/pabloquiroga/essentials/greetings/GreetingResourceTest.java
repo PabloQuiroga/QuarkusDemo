@@ -9,7 +9,7 @@ import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
 @TestHTTPEndpoint(GreetingResource.class)
-class GreetingResourceTest {
+public class GreetingResourceTest {
 
     /**
      Patron =>
