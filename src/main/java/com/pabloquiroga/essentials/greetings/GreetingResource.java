@@ -14,16 +14,16 @@ public class GreetingResource {
         this.service = service;
     }
 
+    /*
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String hello() {
         return "Hello from Quarkus";
-    }
+    } */
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @Path("/{name}")
-    public String greetins(@PathParam("name") String name) {
+    public String greetings(@QueryParam("name") String name) {
         return service.greeting(name);
     }
 
