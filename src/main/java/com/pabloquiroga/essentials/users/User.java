@@ -23,6 +23,9 @@ public class User {
         this.birthdate = birthdate;
         this.age = setAgeFromBirthdate(birthdate);
     }
+    public static User of(String name, String surname, String birthdate){
+        return new User(name, surname, birthdate);
+    }
 
     /**
      * @param birthdate with format "15/08/1993"
