@@ -1,5 +1,6 @@
 package com.pabloquiroga.essentials.users;
 
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -52,5 +53,49 @@ public class UserResource {
     @Path("create")
     public boolean create(User user){
         return service.createUser(user);
+    }
+
+    /**
+     * Using DDBB
+     */
+    @GET
+    @Path("/all")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAll(){
+        var response = service.getAllUsers();
+
+        if (!response.isEmpty()) {
+            return Response.ok(response).build();
+        } else {
+            return Response.noContent().build();
+        }
+    }
+
+    @GET
+    @Path("/first")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getFirst(){
+        var response = service.getFirst()
+                .orElseThrow(() ->
+                        new NoSuchElementException("No hay datos"));
+
+        return Response.ok(response).build();
+    }
+
+    @GET
+    @Path("/user")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getById(@QueryParam("id") Long id){
+        var response = service.getById(id)
+                .orElseThrow(() ->
+                        new NoSuchElementException("No hay datos que coincidan con la busqueda"));
+        return Response.ok(response).build();
+    }
+
+    @POST
+    @Transactional
+    public Response saveUser(User user){
+        service.create(user);
+        return Response.ok(user).build();
     }
 }

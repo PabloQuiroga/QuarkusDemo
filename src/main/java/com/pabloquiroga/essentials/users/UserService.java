@@ -10,9 +10,11 @@ import java.util.Optional;
 public class UserService {
     //simula DDBB
     private List<User> usersList;
+    private final UserRepository repository;
 
-    public UserService() {
+    public UserService(UserRepository repository) {
         usersList = new ArrayList<>();
+        this.repository = repository;
     }
 
     public String getClassMessage() {
@@ -32,6 +34,24 @@ public class UserService {
     }
 
     public Optional<User> getUserById(int id) {
-        return usersList.stream().filter(u -> u.getID() == id).findFirst();
+        return usersList.stream().filter(u -> u.getId() == id).findFirst();
     }
+
+    // Methods with DDBB
+    public List<User> getAllUsers(){
+        return repository.listAll();
+    }
+
+    public Optional<User> getById(Long id){
+        return repository.findByIdOptional(id);
+    }
+
+    public Optional<User> getFirst(){
+        return repository.findAll().stream().findFirst();
+    }
+
+    public void create(User user){
+        repository.persist(user);
+    }
+
 }
