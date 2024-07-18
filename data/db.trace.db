@@ -1,0 +1,16 @@
+2024-07-18 15:08:20.968172-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table [*]User (id integer not null, age integer not null, birthdate date, name varchar(255), surname varchar(255), primary key (id))"; se esperaba "identifier"
+Syntax error in SQL statement "create table [*]User (id integer not null, age integer not null, birthdate date, name varchar(255), surname varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table User (id integer not null, age integer not null, birthdate date, name varchar(255), surname varchar(255), primary key (id)) [42001-224]
+2024-07-18 15:09:25.516204-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table [*]User (id integer not null, age integer not null, birthdate date, name varchar(255), surname varchar(255), primary key (id))"; se esperaba "identifier"
+Syntax error in SQL statement "create table [*]User (id integer not null, age integer not null, birthdate date, name varchar(255), surname varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table User (id integer not null, age integer not null, birthdate date, name varchar(255), surname varchar(255), primary key (id)) [42001-224]
+2024-07-18 16:45:41.886537-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "drop table if exists [*]User cascade "; se esperaba "identifier"
+Syntax error in SQL statement "drop table if exists [*]User cascade "; expected "identifier"; SQL statement:
+drop table if exists User cascade  [42001-224]
+2024-07-18 16:45:41.897042-03:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "create table [*]User (age integer not null, birthdate date, id integer not null, name varchar(255), surname varchar(255), primary key (id))"; se esperaba "identifier"
+Syntax error in SQL statement "create table [*]User (age integer not null, birthdate date, id integer not null, name varchar(255), surname varchar(255), primary key (id))"; expected "identifier"; SQL statement:
+create table User (age integer not null, birthdate date, id integer not null, name varchar(255), surname varchar(255), primary key (id)) [42001-224]
