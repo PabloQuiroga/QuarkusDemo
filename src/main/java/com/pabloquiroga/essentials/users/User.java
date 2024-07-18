@@ -1,5 +1,7 @@
 package com.pabloquiroga.essentials.users;
 
+import com.pabloquiroga.essentials.utils.Dates;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +12,7 @@ public class User {
     public String name;
     public String surname;
     public int age;
-    public String birthdate;
+    public LocalDate birthdate;
 
     public User(){}
     public User(String name, String surname){
@@ -20,8 +22,8 @@ public class User {
     }
     public User(String name, String surname, String birthdate){
         this(name, surname);
-        this.birthdate = birthdate;
-        this.age = setAgeFromBirthdate(birthdate);
+        this.birthdate = Dates.parseDate(birthdate);
+        this.age = setAgeFromBirthdate();
     }
     public static User of(String name, String surname, String birthdate){
         return new User(name, surname, birthdate);
@@ -34,15 +36,8 @@ public class User {
         return this.id;
     }
 
-    /**
-     * @param birthdate with format "15/08/1993"
-     */
-    public int setAgeFromBirthdate(String birthdate){
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate fechaNac = LocalDate.parse(birthdate, fmt);
-        LocalDate ahora = LocalDate.now();
-        Period periodo = Period.between(fechaNac, ahora);
-        return periodo.getYears();
+    private int setAgeFromBirthdate(){
+        return Period.between(this.birthdate, LocalDate.now()).getYears();
     }
 
     /**
