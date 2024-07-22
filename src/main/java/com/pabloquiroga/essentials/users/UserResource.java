@@ -5,7 +5,6 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @Path("/users")
@@ -16,48 +15,6 @@ public class UserResource {
         this.service = service;
     }
 
-    @GET
-    public Response getMessageResponse(){
-        return Response.ok(service.getClassMessage()).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/default")
-    public Response getUserDefault(){
-        var response = service.getDefaultUser()
-                .orElseThrow(() ->
-                        new NoSuchElementException("No hay datos que coincidan con lo solicitado"));
-        return Response.ok(response).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/id")
-    public Response getUserById(@QueryParam("id") int id){
-        var response = service.getUserById(id)
-                .orElseThrow(() ->
-                        new NoSuchElementException("No hay datos que coincidan con lo solicitado"));
-
-        return Response.ok(response).build();
-    }
-
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/list")
-    public List<User> getUsersList(){
-        return service.getAll();
-    }
-
-    @POST
-    @Path("create")
-    public boolean create(User user){
-        return service.createUser(user);
-    }
-
-    /**
-     * Using DDBB
-     */
     @GET
     @Path("/all")
     @Produces(MediaType.APPLICATION_JSON)
@@ -97,5 +54,36 @@ public class UserResource {
     public Response saveUser(User user){
         service.create(user);
         return Response.ok(user).build();
+    }
+
+    @DELETE
+    public Response deleteUser(@QueryParam("id") Long id){
+        if (service.delete(id)){
+            return Response.ok("Registro eliminado satisfactoriamente").build();
+        } else {
+            return Response.status(404).entity("Registro no encontrado").build();
+        }
+    }
+
+    @PUT
+    public Response updateUser(@QueryParam("id") String id, User user){
+        if (service.update(id, user)) {
+            return Response.ok("Registro actualizado correctamente").build();
+        } else {
+            return Response.status(404).entity("Registro no encontrado").build();
+        }
+    }
+
+    @GET
+    @Path("/adults")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAdults(){
+        var response = service.getAdultUsers();
+
+        if (!response.isEmpty()) {
+            return Response.ok(response).build();
+        } else {
+            return Response.noContent().build();
+        }
     }
 }

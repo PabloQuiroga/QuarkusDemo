@@ -8,8 +8,8 @@ import java.util.Optional;
 
 @ApplicationScoped
 public class UserService {
-    //simula DDBB
-    private List<User> usersList;
+
+    private final List<User> usersList; //simula DDBB
     private final UserRepository repository;
 
     public UserService(UserRepository repository) {
@@ -51,7 +51,39 @@ public class UserService {
     }
 
     public void create(User user){
+        user.setAge(User.setAgeFromBirthdate(user.getBirthdate()));
         repository.persist(user);
     }
 
+    public boolean delete(Long id){
+        return repository.deleteById(id);
+    }
+
+    public boolean update(String id, User user){
+        var updatedUser = repository.findById(Long.valueOf(id));
+
+        if(updatedUser != null){
+            updatedUser.setName(user.getName());
+            updatedUser.setSurname(user.getSurname());
+            updatedUser.setBirthdate(user.getBirthdate());
+            updatedUser.setAge(user.getAge());
+
+            repository.persist(updatedUser);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<User> getAdultUsers(){
+        return repository.list("age >= 18");
+    }
+
+    public List<User> getUntilAge(int age){
+        return repository.list("age <= ?", age);
+    }
+
+    public List<User> getBetweenAges(int menor, int mayor){
+        return repository.list("age > ?1 AND age < ?2", menor, mayor);
+    }
 }
